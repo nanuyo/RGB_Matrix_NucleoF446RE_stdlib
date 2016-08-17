@@ -35,16 +35,42 @@
 #include "config.h"
 #include "testimage.h"
 #include "matrix.h"
-
+#include "tm_stm32f4_delay.h"
+#define DELAYMIL 2000
 int main(void)
 {
+	TM_DELAY_Init();
 	framebuffer_init();
 	colorcorr_init();
-	control_uart_init();
-	testimage_init();
+	//control_uart_init();
 	matrix_init();
+	for(;;)
+	{
+#if 1
+	testimage_init();
+	Delayms(DELAYMIL);
 
-	control_uart_loop();
+	drawStringLoop();
+	Delayms(DELAYMIL);
+	ugTest();
+	Delayms(DELAYMIL);
+
+
+	colWheelTest();
+
+	Delayms(DELAYMIL);
+
+
+
+	drawPlasma32x32();
+
+	adaTest();
+#endif
+	adaTestShape32x32();
+
+	//control_uart_loop();
+	}
+
 	return 0;
 }
 
