@@ -46,11 +46,12 @@ int main(void)
 	matrix_init();
 	for(;;)
 	{
-#if 1
+
 	testimage_init();
 	Delayms(DELAYMIL);
 
 	drawStringLoop();
+#if 1
 	Delayms(DELAYMIL);
 	ugTest();
 	Delayms(DELAYMIL);
