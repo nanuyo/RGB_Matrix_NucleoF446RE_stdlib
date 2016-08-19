@@ -52,25 +52,26 @@ int main(void)
 
 	drawStringLoop();
 
+#endif
 	//Delayms(DELAYMIL);
 	ugTest();
 	Delayms(DELAYMIL);
 
-
+#ifndef _LED64_64_1
 	colWheelTest();
-
 	Delayms(DELAYMIL);
-
-
 #endif
+
+#if 1
 	drawPlasma32x32();
 
 	adaTest();
 
 	adaTestShape32x32();
-
+#endif
 	Delayms(DELAYMIL);
 	//control_uart_loop();
+
 	}
 
 	return 0;

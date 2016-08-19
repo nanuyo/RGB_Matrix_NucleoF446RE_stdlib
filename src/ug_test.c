@@ -8,8 +8,9 @@
 #include "ugui.h"
 #include "framebuffer.h"
 #include "colorcorr.h"
-//#include "image565.h"
-#include "imageX565.h"
+#include "image888.h"
+#include "image565.h"
+//#include "imageX565.h"
 /* GUI structure */
 UG_GUI gui;
 
@@ -27,6 +28,9 @@ void ugDrawPixelRGB(UG_S16 x, UG_S16 y, UG_COLOR color) {
 void ugTest(){
 
 	UG_Init(&gui,(void(*)(UG_S16,UG_S16,UG_COLOR))ugDrawPixelRGB,MATRIX_WIDTH,MATRIX_HEIGHT);
+#ifdef _LED64_64_1
+	UG_DrawBMP888(0, 0, &logo32 );
+#else
 	UG_FillScreen( C_WHITE );
 	UG_FontSelect( &FONT_6X8 );
 	UG_FillFrame( 0, 0, 10, 10, C_RED);
@@ -47,15 +51,15 @@ void ugTest(){
 
 	UG_PutChar( 'T', 0, 23, C_BROWN, C_ORANGE );
 
+
 	if(MATRIX_WIDTH>32){
-	//UG_DrawBMP( MATRIX_PANEL_WIDTH, 0, &logo );
-	UG_DrawBMP(MATRIX_PANEL_WIDTH, 0, &xlogo );
+		UG_DrawBMP( MATRIX_PANEL_WIDTH, 0, &logo );
 	}
 	else{
-	framebuffer_swap();
-	Delayms(DELAYMIL);
-	//UG_DrawBMP( 0, 0, &logo );
+		framebuffer_swap();
+		Delayms(DELAYMIL);
+		UG_DrawBMP( 0, 0, &logo );
 	}
-
+#endif
 	framebuffer_swap();
 }

@@ -163,6 +163,7 @@ void adaTestShape32x32() {
 #endif
 
   // print each letter with a rainbow color
+#ifndef _LED64_64_1
   Adafruit_GFX_setTextColor(&Object,Color333(7,0,0));
   Adafruit_GFX_write(&Object,'3');
   Adafruit_GFX_setTextColor(&Object,Color333(7,4,0));
@@ -173,6 +174,18 @@ void adaTestShape32x32() {
   Adafruit_GFX_write(&Object,'3');
   Adafruit_GFX_setTextColor(&Object,Color333(0,7,0));
   Adafruit_GFX_write(&Object,'2');
+#else
+  Adafruit_GFX_setTextColor(&Object,Color333(7,0,0));
+    Adafruit_GFX_write(&Object,'6');
+    Adafruit_GFX_setTextColor(&Object,Color333(7,4,0));
+    Adafruit_GFX_write(&Object,'4');
+    Adafruit_GFX_setTextColor(&Object,Color333(7,7,0));
+    Adafruit_GFX_write(&Object,'x');
+    Adafruit_GFX_setTextColor(&Object,Color333(4,7,0));
+    Adafruit_GFX_write(&Object,'6');
+    Adafruit_GFX_setTextColor(&Object,Color333(0,7,0));
+    Adafruit_GFX_write(&Object,'4');
+#endif
 
   Adafruit_GFX_setTextColor(&Object,Color333(0,7,7));
   Adafruit_GFX_write(&Object,'*');
