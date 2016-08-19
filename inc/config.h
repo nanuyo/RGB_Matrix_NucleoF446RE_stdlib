@@ -8,7 +8,7 @@
 #ifndef CONFIG_H_
 #define CONFIG_H_
 
-//#define NANUYO
+#define NANUYO
 //#define _LED32_32_1  // 1 of 32x32
 //#define _LED32_32_2 // 2 of 32x32
 #define _LED64_64_1 // 1 of 64x64
