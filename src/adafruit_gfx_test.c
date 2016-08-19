@@ -9,10 +9,16 @@
 
 #include "framebuffer.h"
 #include "colorcorr.h"
+#include "tm_stm32f4_delay.h"
 
 GFX_Object Object;
 
+#ifdef NANUYO
+const char str[] = "www.nanuyo.com STM32 RGB LED Matrix";
+#else
 const char str[] = "Smartcore RGB LED Matrix";
+#endif
+
 int    textX   = MATRIX_WIDTH ,
        textMin = sizeof(str) * -12,
        hue     = 0;
@@ -34,14 +40,21 @@ void adaDrawPixel(int32_t x, int32_t y, uint16_t color ) {
 	int32_t offset=(x + (y*MATRIX_WIDTH))*3;
     uint8_t R8,G8,B8,R5,G6,B5;
 
-    R5 = (color&0xf800)>>8;
-    G6 = (color&0x07E0)>>4;
+
+
+    R5 = (color&0xf800)>>11;
+    G6 = (color&0x07E0)>>5;
     B5 = color&0x1f;
 
+#if 1
+    R8 = ( R5 << 3) | (R5 >> 2);
+    G8 = ( G6 << 3) | (G6 >> 2);
+    B8 = ( B5 << 3) | (B5 >> 2);
+#else
 	R8 = ( R5 * 527 + 23 ) >> 6;
 	G8 = ( G6 * 259 + 33 ) >> 6;
 	B8 = ( B5 * 527 + 23 ) >> 6;
-
+#endif
 	framebuffer_write(offset,colorcorr_lookup(R8));
 	framebuffer_write(offset+1,colorcorr_lookup(G8));
 	framebuffer_write(offset+2,colorcorr_lookup(B8));
@@ -65,14 +78,14 @@ void adaTest(){
 	Adafruit_GFX_Init(&Object);
 
 	//Adafruit_GFX_drawCircle(&Object, 0, 0, 5, 0xffff);
-	Adafruit_GFX_setTextSize(&Object, 2);
-	Adafruit_GFX_setTextColor(&Object, 0x07E0);
-	Adafruit_GFX_print(&Object, "Test");
+//	Adafruit_GFX_setTextSize(&Object, 2);
+	//Adafruit_GFX_setTextColor(&Object, 0x07E0);
+//	Adafruit_GFX_print(&Object, "Test");
 
-	Adafruit_GFX_setTextSize(&Object, 2);
+	Adafruit_GFX_setTextSize(&Object, 1);
 	Adafruit_GFX_setTextWrap(&Object, False); // Allow text to run off right edge
 
-	for(int k=500;k>0;k--)
+	for(int k=150;k>0;k--)
 	{
 	  uint8_t i;
 
@@ -105,7 +118,8 @@ void adaTest(){
 	  if(hue >= 1536) hue -= 1536;
 
 	  // Update display
-	  framebuffer_swap();
+	  		  framebuffer_swap();
+
 	}
 
 }
@@ -140,8 +154,13 @@ void adaTestShape32x32() {
   Adafruit_GFX_setTextWrap(&Object, False);// Don't wrap at end of line - will do ourselves
 
   Adafruit_GFX_setTextColor(&Object,Color333(7,7,7));
+#ifdef NANUYO
+  Adafruit_GFX_println(&Object,"NA-NU-YO");
+   Adafruit_GFX_println(&Object,"www.nanuyo.com");
+#else
   Adafruit_GFX_println(&Object,"Smart");
   Adafruit_GFX_println(&Object,"core");
+#endif
 
   // print each letter with a rainbow color
   Adafruit_GFX_setTextColor(&Object,Color333(7,0,0));

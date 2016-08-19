@@ -111,17 +111,23 @@ void drawStringLoop() {
 
 	 fillScreen(0);
 
-	for(int i = 0; i<300; i++)
+	for(int i = 0; i<50; i++)
 	   {
 		 foreground_color.R=0x00;
 	 	 foreground_color.G=0xff;
 	 	 foreground_color.B=0x00;
 
-	 	 background_color.R=0xff;
+	 	 background_color.R=0x0;
 	 	 background_color.G=0x0;
-	 	 background_color.B=0xff;
+	 	 background_color.B=0x00;
 if(MATRIX_WIDTH>32)
-	 calculateLEDString("12345678",0,0,Font8x8);
+{
+#ifdef NANUYO
+	 calculateLEDString("NA-NU-YO",0,0,Font8x8);
+#else
+	 calculateLEDString("SMARTCOR",0,0,Font8x8);
+#endif
+}
 else
 	 calculateLEDString("SMART",0,0,Font8x8);
 
@@ -129,12 +135,18 @@ else
 		 	 foreground_color.G=0x00;
 		 	 foreground_color.B=0xff;
 
-		 	 background_color.R=0xff;
-		 	 background_color.G=0xff;
+		 	 background_color.R=0x0;
+		 	 background_color.G=0x0;
 		 	 background_color.B=0x0;
 
 if(MATRIX_WIDTH>32)
-	 calculateLEDString("ABCDEFGH",0,8,Font8x8);
+{
+#ifdef NANUYO
+	 calculateLEDString(" NaNuYo ",0,8,Font8x8);
+#else
+	 calculateLEDString("  CORE  ",0,8,Font8x8);
+#endif
+}
 else
 		 calculateLEDString("CORE",0,8,Font8x8);
 
@@ -144,11 +156,17 @@ else
 	     	 foreground_color.B=0x00;
 
 	     	 background_color.R=0x0;
-	     	 background_color.G=0xff;
-	     	 background_color.B=0xff;
+	     	 background_color.G=0x00;
+	     	 background_color.B=0x0;
 
 if(MATRIX_WIDTH>32)
-	 calculateLEDString("abcdefgh",0,16,Font8x8);
+{
+#ifdef NANUYO
+	 calculateLEDString("   DIY  ",0,16,Font8x8);
+#else
+	calculateLEDString(" SMART  ",0,16,Font8x8);
+#endif
+}
 else
 		 calculateLEDString("CORE",0,16,Font8x8);
 
@@ -159,8 +177,11 @@ else
 	 	 	 background_color.R=0x0;
 	 	 	 background_color.G=0x0;
 	 	 	 background_color.B=0x0;
-
-	 	  calculateScrollText("SMARTCORE",Font8x8,10,24,&scroll1);
+#ifdef NANUYO
+	 	  	 	 calculateScrollText("www.nanuyo.com",Font8x8,14,24,&scroll1);
+#else
+	 	  	 	calculateScrollText("SMARTCORE",Font8x8,10,24,&scroll1);
+#endif
 	 	  //calculateScrollText("Smartcore",Font8x8,10,8,&scroll1);
 
 	 	//  calculateScrollText("www.smartcoreinc.com",Font8x8,20,16,&scroll2);
@@ -169,10 +190,18 @@ else
 	 	  //calculateScrollText("Smart Core",Font8x8,10,8,&scroll1);
 	 	 if(MATRIX_HEIGHT>32)
 	 	 {
+#ifdef NANUYO
+	 		calculateLEDString("NA-NU-YO",0,32,Font8x8);
+	 			 	calculateLEDString("NA-NU-YO",0,32+8,Font8x8);
+	 			 	calculateLEDString("NA-NU-YO",0,32+16,Font8x8);
+	 			 	calculateLEDString("NA-NU-YO",0,32+24,Font8x8);
+#else
 	 	    calculateLEDString("abcdefgh",0,32,Font8x8);
 	 	   calculateLEDString("abcdefgh",0,32+8,Font8x8);
 	 	  calculateLEDString("abcdefgh",0,32+16,Font8x8);
 	 	  calculateLEDString("abcdefgh",0,32+24,Font8x8);
+#endif
+
 	 	 }
 
 	 	 framebuffer_swap();

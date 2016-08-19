@@ -57,7 +57,7 @@ void drawPlasma32x32() {
   unsigned char x, y;
   long          value;
 
-  for(int i=500;i>0;i--)
+  for(int i=50;i>0;i--)
   	{
 
   sx1 = (int)(cos(angle1) * radius1 + centerx1);

@@ -6,11 +6,11 @@
  */
 #include "ugui.h"
 
+#ifdef SMARTCORE_LOGO
 #define COLOR_BPP          16
 #define COLOR_STORAGE_SIZE 2
 #define BMPWIDTH           32
 #define BMPHEIGHT          32
-
 
 
 const UG_U16 image16[] = {
@@ -144,8 +144,11 @@ const UG_U16 image16[] = {
     0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff
 };
 
+#else
+#endif
 
-const UG_BMP smartcorelogo =
+
+const UG_BMP logo =
 {
    (void*)image16,
    BMPWIDTH,

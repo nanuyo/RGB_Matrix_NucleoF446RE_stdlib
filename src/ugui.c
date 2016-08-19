@@ -5265,14 +5265,14 @@ void _UG_PutChar( char chr, UG_S16 x, UG_S16 y, UG_COLOR fc, UG_COLOR bc, const 
 
    switch ( bt )
    {
-      case 0xF6: bt = 0x94; break; // ö
-      case 0xD6: bt = 0x99; break; // Ö
-      case 0xFC: bt = 0x81; break; // ü
-      case 0xDC: bt = 0x9A; break; // Ü
-      case 0xE4: bt = 0x84; break; // ä
-      case 0xC4: bt = 0x8E; break; // Ä
-      case 0xB5: bt = 0xE6; break; // µ
-      case 0xB0: bt = 0xF8; break; // °
+      case 0xF6: bt = 0x94; break; //
+      case 0xD6: bt = 0x99; break; //
+      case 0xFC: bt = 0x81; break; //
+      case 0xDC: bt = 0x9A; break; //
+      case 0xE4: bt = 0x84; break; //
+      case 0xC4: bt = 0x8E; break; //
+      case 0xB5: bt = 0xE6; break; //
+      case 0xB0: bt = 0xF8; break; //
    }
 
    if (bt < font->start_char || bt > font->end_char) return;
@@ -5805,7 +5805,8 @@ void UG_WaitForUpdate( void )
 void UG_DrawBMP( UG_S16 xp, UG_S16 yp, UG_BMP* bmp )
 {
    UG_S16 x,y,xs;
-   UG_U8 r,g,b;
+   uint8_t R8,G8,B8,R5,G6,B5;
+   //UG_U8 r,g,b;
    UG_U16* p;
    UG_U16 tmp;
    UG_COLOR c;
@@ -5830,14 +5831,61 @@ void UG_DrawBMP( UG_S16 xp, UG_S16 yp, UG_BMP* bmp )
       {
          tmp = *p++;
          /* Convert RGB565 to RGB888 */
+
+
+
+
+            R5 = (tmp&0xf800)>>11;
+            G6 = (tmp&0x07E0)>>5;
+            B5 = tmp&0x1f;
+
+
+            R8 = ( R5 << 3) | (R5 >> 2);
+            G8 = ( G6 << 3) | (G6 >> 2);
+            B8 = ( B5 << 3) | (B5 >> 2);
+         /*
          r = (tmp>>11)&0x1F;
          r<<=3;
          g = (tmp>>5)&0x3F;
          g<<=2;
          b = (tmp)&0x1F;
-         b<<=3;
-         c = ((UG_COLOR)r<<16) | ((UG_COLOR)g<<8) | (UG_COLOR)b;
+         b<<=3;*/
+         c = ((UG_COLOR)R8<<16) | ((UG_COLOR)G8<<8) | (UG_COLOR)B8;
          UG_DrawPixel( xp++ , yp , c );
+      }
+      yp++;
+   }
+}
+
+void UG_DrawBMP888( UG_S16 xp, UG_S16 yp, UG_BMP* bmp )
+{
+   UG_S16 x,y,xs;
+   //UG_U8 r,g,b;
+   UG_U32* p;
+   UG_U32 tmp;
+   //UG_COLOR c;
+
+   if ( bmp->p == NULL ) return;
+
+   /* Only support 32 BPP so far */
+     if ( bmp->bpp == BMP_BPP_32 )
+     {
+        p = (UG_U32*)bmp->p;
+     }
+     else
+     {
+        return;
+     }
+
+   xs = xp;
+   for(y=0;y<bmp->height;y++)
+   {
+      xp = xs;
+      for(x=0;x<bmp->width;x++)
+      {
+         tmp = *p++;
+
+         UG_DrawPixel( xp++ , yp ,  tmp );
       }
       yp++;
    }

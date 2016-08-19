@@ -8,16 +8,19 @@
 #include "ugui.h"
 #include "framebuffer.h"
 #include "colorcorr.h"
-#include "image565.h"
+//#include "image565.h"
+#include "imageX565.h"
 /* GUI structure */
 UG_GUI gui;
 
 void ugDrawPixelRGB(UG_S16 x, UG_S16 y, UG_COLOR color) {
 	UG_S16 offset=(x + (y*MATRIX_WIDTH))*3;
 
+
 	framebuffer_write(offset,colorcorr_lookup((color&0xff0000)>>16));
 	framebuffer_write(offset+1,colorcorr_lookup((color&0x00ff00)>>8));
 	framebuffer_write(offset+2,colorcorr_lookup(color&0xff));
+
 }
 #include "tm_stm32f4_delay.h"
 #define DELAYMIL 2000
@@ -45,12 +48,13 @@ void ugTest(){
 	UG_PutChar( 'T', 0, 23, C_BROWN, C_ORANGE );
 
 	if(MATRIX_WIDTH>32){
-	UG_DrawBMP( MATRIX_PANEL_WIDTH, 0, &smartcorelogo );
+	//UG_DrawBMP( MATRIX_PANEL_WIDTH, 0, &logo );
+	UG_DrawBMP(MATRIX_PANEL_WIDTH, 0, &xlogo );
 	}
 	else{
 	framebuffer_swap();
 	Delayms(DELAYMIL);
-	UG_DrawBMP( 0, 0, &smartcorelogo );
+	//UG_DrawBMP( 0, 0, &logo );
 	}
 
 	framebuffer_swap();

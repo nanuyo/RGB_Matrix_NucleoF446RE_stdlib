@@ -11,11 +11,16 @@
 #include "config.h"
 #include "stm32f4xx.h"
 
+
+uint32_t PWM_Frequency = 100;
+uint32_t PWM_Steps = 100;
+
 void matrix_init_timer() {
 	static TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
 	static TIM_OCInitTypeDef TIM_OCStructure;
 	static NVIC_InitTypeDef NVIC_InitStructure;
 	static GPIO_InitTypeDef GPIO_InitStructure;
+
 
 	//RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
